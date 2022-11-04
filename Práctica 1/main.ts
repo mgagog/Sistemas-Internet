@@ -32,7 +32,7 @@ const modificarArray = (miArray: any[]): undefined | (number | undefined)[]=> {
     const arrayAux = arrayMapeado.slice(); // crea una copia para acceder a los datos inalterados posteriormente
     const arrayFinal = arrayMapeado.map((elem, index) => { // mapear el array a uno donde cada elemento sea el múltiplo del resto de elementos del rray original
     
-        let aux: (number | undefined)[] = arrayAux.slice(); // array auxiliar que en cada iteración se igualará a la copia creada anteriormente, para reducir siempre el array original
+        const aux: (number | undefined)[] = arrayAux.slice(); // array auxiliar que en cada iteración se igualará a la copia creada anteriormente, para reducir siempre el array original
         aux.splice(index, 1); // se elimina el elemento donde se encuentra la iteración
 
         return aux.reduce((acc: number | undefined, num: number | undefined) => { // se devuelve el producto de todos los elementos restantes con un reduce
