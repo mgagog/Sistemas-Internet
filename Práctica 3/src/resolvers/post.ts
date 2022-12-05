@@ -1,8 +1,9 @@
 import { RouterContext } from "https://deno.land/x/oak@v11.1.0/router.ts";
+import { ObjectId } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 import { BookSchema, UserSchema, AuthorSchema } from "../db/schemas.ts";
 import { Book, User, Author } from "../types.ts";
 import { booksCollection, usersCollection, authorsCollection } from "../db/mongo.ts";
-import { isEmail, isbnGenerator, encodeDecode } from "../functions.ts";
+import { isEmail, isbnGenerator, encodeDecode, isObjectId } from "../functions.ts";
 
 
 type addUserContext = RouterContext<
@@ -88,13 +89,19 @@ export const addBook = async (ctx: addBookContext) => {
   try{
   const result = ctx.request.body({ type: "json" });
   const value = await result.value;
-  const existsAuthor = await authorsCollection.findOne( {name: value?.author} )
+  
 
-  if (!value?.title || !value?.author || !value?.pages) {
-      ctx.response.body = "El JSON es incorrecto"
+  if (!value?.title || !value?.id_author || !value?.pages) {
+      ctx.response.body = "El JSON es incorrecto (chequear que el campo del autor se llama 'id_author')"
       ctx.response.status = 400;
       return;
   }
+  if(!isObjectId(value?.id_author)){
+    ctx.response.body = "El id del autor no está en el formato correcto"
+    ctx.response.status = 400;
+    return;
+  }
+  const existsAuthor = await authorsCollection.findOne( {_id: new ObjectId(value.id_author)} )
 
   if(!existsAuthor){
       ctx.response.body = "No existe ese autor en la base de datos"
@@ -106,7 +113,7 @@ export const addBook = async (ctx: addBookContext) => {
 
   const book: Partial<Book> = {
     title: value.title,
-    author: value.author,
+    id_author: value.id_author,
     pages: value.pages,
     isbn: isbnGenerator(books)
   };

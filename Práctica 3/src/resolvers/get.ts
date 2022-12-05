@@ -33,7 +33,7 @@ export const getBooks = async (ctx: getBooksContext) => {
               ctx.response.body = books.map((book) => ({
                   id: book._id.toString(),
                   title: book.title,
-                  author: book.author,
+                  id_author: book.id_author,
                   pages: book.pages,
                   isbn: book.isbn
               }));
@@ -49,7 +49,7 @@ export const getBooks = async (ctx: getBooksContext) => {
               ctx.response.body = books.map((book) => ({
                   id: book._id.toString(),
                   title: book.title,
-                  author: book.author,
+                  id_author: book.id_author,
                   pages: book.pages,
                   isbn: book.isbn
               }));
@@ -68,7 +68,7 @@ export const getBooks = async (ctx: getBooksContext) => {
               ctx.response.body = books.map((book) => ({
                   id: book._id.toString(),
                   title: book.title,
-                  author: book.author,
+                  id_author: book.id_author,
                   pages: book.pages,
                   isbn: book.isbn
               }));
@@ -81,7 +81,7 @@ export const getBooks = async (ctx: getBooksContext) => {
       ctx.response.body = books.map((book) => ({
           id: book._id.toString(),
           title: book.title,
-          author: book.author,
+          id_author: book.id_author,
           pages: book.pages,
           isbn: book.isbn,
       }));
@@ -92,7 +92,7 @@ export const getBooks = async (ctx: getBooksContext) => {
       ctx.response.body = books.map((book) => ({
       id: book._id.toString(),
       title: book.title,
-      author: book.author,
+      id_author: book.id_author,
       pages: book.pages,
       isbn: book.isbn,
       }));
