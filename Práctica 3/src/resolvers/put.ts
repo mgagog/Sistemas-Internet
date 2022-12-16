@@ -45,7 +45,7 @@ export const updateCart = async (ctx : updateCartContext)  => {
         ctx.response.body = {
           id: book?._id.toString(),
           title: book?.title,
-          author: book?.author,
+          id_author: book?.id_author,
           user_name: user?.name,
           user_email: user?.email
         };
