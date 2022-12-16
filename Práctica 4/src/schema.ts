@@ -1,12 +1,6 @@
 import { gql } from "graphql_tag";
 
 export const typeDefs = gql`
-  type Car {
-    id: ID!
-    plate: String!
-    brand: String!
-    seats: Int!
-  }
   type Coche {
     id: ID!
     marca: String!
