@@ -22,23 +22,19 @@ export const typeDefs = gql`
   type Concesionario {
     id: ID!
     ciudad: String!
+    nombre: String!
     vendedores: [Vendedor!]!
   }
   type Query {
-    getCars: [Car!]!
-    getCar(id: ID!): Car
     obtenerCoches(id: ID, precio_min: Int, precio_max: Int): [Coches!]!
     obtenerVendedores(id: ID, nombre: String, apellido: String): [Vendedores!]!
     obtenerConcesionarios(id: ID, localidad: String): [Concesionarios!]!
   }
 
   type Mutation {
-    createCar(plate: String!, brand: String!, seats: Int!): Car!
-    updateCar(id: ID!, plate: String!, brand: String!, seats: Int!): Car!
-    deleteCar(id: ID!): Car!
     crearCoche(matricula: String!, marca: String!, precio: Int!): Coche!
     crearVendedor(nombre: String!, apellido: String!, coches: [Coche!]!): Vendedor!
-    crearConcesionario(ciudad: String!, vendedores: [Vendedor!]!): Concesionario!
+    crearConcesionario(ciudad: String!, nombre: String!, vendedores: [Vendedor!]!): Concesionario!
     cocheAVendedor(id_coche: ID!, id_vendedor: ID!): Vendedor!
     vendedorAConcesionario (id_vendedor: ID!, id_concesionario: ID!): Concesionario!
   }
