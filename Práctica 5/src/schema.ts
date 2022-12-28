@@ -25,3 +25,4 @@ export const typeDefs = `
     sendMessage(destinatario: String!, mensaje: String!): Mensaje!
   }
 `;
+
