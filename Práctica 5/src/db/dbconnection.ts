@@ -1,5 +1,5 @@
 import { MongoClient, Database } from "mongo";
-import { CarSchema, CocheSchema, VendedorSchema, ConcesionarioSchema } from "./schema.ts";
+import { UsuarioSchema, MensajeSchema} from "./schema.ts";
 
 import { config } from "std/dotenv/mod.ts";
 
@@ -11,9 +11,10 @@ const connectMongoDB = async (): Promise<Database> => {
 
   if (!db_name || !url_mongo) {
     throw new Error(
-      "Hacen falta una URL y una base de datos en el env"
+      "Faltan variables de entorno"
     );
   }
+
 
   const client = new MongoClient();
   await client.connect(url_mongo);
@@ -22,9 +23,7 @@ const connectMongoDB = async (): Promise<Database> => {
 };
 
 const db = await connectMongoDB();
-console.info(`Conectado a la base de datos ${db.name}`);
+console.info(`MongoDB ${db.name} connected`);
 
-export const carsCollection = db.collection<CarSchema>("cars");
-export const cochesCollection = db.collection<CocheSchema>("coches");
-export const vendedoresCollection = db.collection<VendedorSchema>("vendedores");
-export const concesionariosCollection = db.collection<ConcesionarioSchema>("concesionarios");
+export const UsuariosCollection = db.collection<UsuarioSchema>("usuarios");
+export const MensajesCollection = db.collection<MensajeSchema>("mensajes");

@@ -6,10 +6,22 @@ import { Query } from "./resolvers/query.ts";
 import { Mutation } from "./resolvers/mutation.ts";
 import { typeDefs } from "./schema.ts";
 
+import { config } from "std/dotenv/mod.ts";
+
+await config({ export: true, allowEmptyValues: true });
+
+
 const resolvers = {
   Query,
   Mutation,
 };
+
+const portEnv = Number(Deno.env.get("PORT"));
+if (!portEnv) {
+  throw new Error(
+    "Hace falta un PORT en el env"
+  );
+}
 
 const s = new Server({
   handler: async (req) => {
@@ -22,9 +34,9 @@ const s = new Server({
         })(req)
       : new Response("Not Found", { status: 404 });
   },
-  port: 3000,
+  port: portEnv,
 });
 
 s.listenAndServe();
 
-console.log(`Server running on: http://localhost:3000/graphql`);
+console.log(`Server running on: http://localhost:${Deno.env.get("PORT")}/graphql`);

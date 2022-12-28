@@ -19,6 +19,7 @@ export type Vendedor = {
 }
 export type Concesionario = {
   id: string;
+  nombre: string;
   ciudad: string;
   vendedores: Vendedor[];
 }
