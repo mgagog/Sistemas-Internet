@@ -27,7 +27,9 @@ export const Mutation = {
         throw new Error("El idioma no está en el header lang");
 
       const hashedPassword = await bcrypt.hash(args.password);
+
       const _id = new ObjectId();
+
       const nuevoUsuario: UsuarioSchema = {
         _id,
         username: args.username,
@@ -52,26 +54,33 @@ export const Mutation = {
     }
   ): Promise<string> => {
     try {
-      const user: UsuarioSchema | undefined = await UsuariosCollection.findOne({
+      const usuario: UsuarioSchema | undefined = await UsuariosCollection.findOne({
         username: args.username,
       });
-      if (!user) {
+
+      if (!usuario) {
         throw new Error("El usuario no existe");
       }
-      if(!user.password){
+
+      if(!usuario.password){
         throw new Error("La contraseña no existe");
       }
-      const validPassword = await bcrypt.compare(args.password, user.password);
-      if (!validPassword) {
+
+      const validPassword = await bcrypt.compare(args.password, usuario.password);
+      if (!validPassword) 
         throw new Error("Contraseña incorrecta");
-      }
+      
+      const clave = Deno.env.get("JWT_SECRET");
+      if(!clave)
+        throw new Error("No se encuentra la clave para el JWT en el env");
+      
       const token = await createJWT(
         {
-          username: user.username,
-          id: user._id.toString(),
-          idioma: user.idioma
+          username: usuario.username,
+          id: usuario._id.toString(),
+          idioma: usuario.idioma
         },
-        Deno.env.get("JWT_SECRET")!
+        clave!
       );
       return token;
     } catch (e) {
